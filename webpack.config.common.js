@@ -21,6 +21,46 @@ module.exports = {
           from: path.resolve(__dirname, 'public/favicon.png'),
           to: path.resolve(__dirname, 'dist'),
         },
+        {
+          from: path.resolve(__dirname, 'src/assets/icons/cloud-rain.svg'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/icons/cloud-snow.svg'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/icons/pause.svg'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/icons/sun.svg'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/rainy-bg.jpg'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/summer-bg.jpg'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/winter-bg.jpg'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/sounds/rain.mp3'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/sounds/summer.mp3'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets/sounds/winter.mp3'),
+          to: path.resolve(__dirname, 'dist'),
+        },
       ],
     }),
     new MiniCssExtractPlugin(),
@@ -48,63 +88,12 @@ module.exports = {
         ],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        test: /\.(png|jpe?g|gif|svg|woff|woff2|eot|ttf|otf|ico|mp3|wav)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'assets/[name].[hash][ext]',
+        },
       },
     ],
   },
 }
-
-// const path = require('path')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
-// module.exports = {
-//   // указываем режим сборки, который будет зависеть от переменной окружения NODE_ENV
-//   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-//   // указываем входную точку приложения
-//   entry: './src/index.js',
-//   // указываем выходную точку и имя файла сборки
-//   output: {
-//     path: path.resolve(__dirname, 'dist'),
-//     filename: 'bundle.js',
-//   },
-//   devServer: {
-//     port: 3000,
-//     open: true,
-//     contentBase: path.join(__dirname, 'dist'),
-//   },
-//   // настраиваем плагины
-//   plugins: [
-//     // плагин для генерации HTML файла с подключенным скриптом
-//     new HtmlWebpackPlugin({
-//       template: './src/index.html',
-//     }),
-//     // плагин для извлечения CSS из JS и создания отдельного файла стилей
-//     new MiniCssExtractPlugin({
-//       filename: 'style.css',
-//     }),
-//   ],
-//   // настраиваем загрузчики
-//   module: {
-//     rules: [
-//       // правило для обработки CSS файлов
-//       {
-//         test: /\.css$/i,
-//         use: [MiniCssExtractPlugin.loader, 'css-loader'],
-//       },
-//       // правило для обработки Sass файлов
-//       {
-//         test: /\.s[ac]ss$/i,
-//         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-//       },
-//       {
-//         test: /\.(png|jpe?g|gif|svg|woff|woff2|eot|ttf|otf|ico|mp3|wav)$/i,
-//         type: 'asset/resource',
-//         generator: {
-//           filename: 'assets/[name].[hash][ext]',
-//         },
-//       },
-//     ],
-//   },
-// }
