@@ -1,4 +1,28 @@
 import './index.scss'
+import summerBg from './assets/summer-bg.jpg'
+import rainyBg from './assets/rainy-bg.jpg'
+import winterBg from './assets/winter-bg.jpg'
+import urlSunIcon from './assets/icons/sun.svg'
+import urlRainIcon from './assets/icons/cloud-rain.svg'
+import urlSnowIcon from './assets/icons/cloud-snow.svg'
+import urlPauseIcon from './assets/icons/pause.svg'
+import sunAudio from './assets/sounds/summer.mp3'
+import rainAudio from './assets/sounds/rain.mp3'
+import snowAudio from './assets/sounds/winter.mp3'
+
+const img = new Image()
+img.src = summerBg
+img.src = rainyBg
+img.src = winterBg
+img.src = urlSunIcon
+img.src = urlRainIcon
+img.src = urlSnowIcon
+img.src = urlPauseIcon
+
+const audio = new Audio()
+audio.src = sunAudio
+audio.src = rainAudio
+audio.src = snowAudio
 
 const volumeSlider = document.getElementById('volume')
 
@@ -7,13 +31,11 @@ const rainButton = document.getElementById('rain-button')
 const snowButton = document.getElementById('snow-button')
 
 const sunIcon = document.getElementById('sun')
+// sunIcon.append(img)
 const rainIcon = document.getElementById('rain')
+// rainIcon.append(img)
 const snowIcon = document.getElementById('snow')
-
-const urlSunIcon = "url('./assets/icons/sun.svg')"
-const urlRainIcon = "url('./assets/icons/cloud-rain.svg')"
-const urlSnowIcon = "url('./assets/icons/cloud-snow.svg')"
-const urlPauseIcon = "url('./assets/icons/pause.svg')"
+snowIcon.append(img)
 
 const body = document.body
 
@@ -38,7 +60,7 @@ sunButton.addEventListener('click', () => {
 
   toggleCurrentIconOrPauseIcon(sunIcon, [urlPauseIcon, urlSunIcon])
 
-  changeBackground(sunButton, './assets/summer-bg.jpg')
+  changeBackground(sunButton, summerBg)
   playOrPauseAudio(sunAudio)
 })
 
@@ -48,7 +70,7 @@ rainButton.addEventListener('click', () => {
 
   toggleCurrentIconOrPauseIcon(rainIcon, [urlPauseIcon, urlRainIcon])
 
-  changeBackground(rainButton, './assets/rainy-bg.jpg')
+  changeBackground(rainButton, rainyBg)
   playOrPauseAudio(rainAudio)
 })
 
@@ -58,13 +80,9 @@ snowButton.addEventListener('click', () => {
 
   toggleCurrentIconOrPauseIcon(snowIcon, [urlPauseIcon, urlSnowIcon])
 
-  changeBackground(snowButton, './assets/winter-bg.jpg')
+  changeBackground(snowButton, winterBg)
   playOrPauseAudio(snowAudio)
 })
-
-const sunAudio = new Audio('./assets/sounds/summer.mp3')
-const rainAudio = new Audio('./assets/sounds/rain.mp3')
-const snowAudio = new Audio('./assets/sounds/winter.mp3')
 
 const allAudio = [sunAudio, rainAudio, snowAudio]
 
@@ -78,7 +96,7 @@ const playOrPauseAudio = (audio) => {
     stopAllAudio()
     audio.play()
   } else {
-    audio.pause()
+    audio.pause
   }
 }
 
