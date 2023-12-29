@@ -9,7 +9,6 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: 'assets/[hash][ext][query]',
     clean: true,
   },
   plugins: [
@@ -20,6 +19,10 @@ module.exports = {
       patterns: [
         {
           from: path.resolve(__dirname, 'public/favicon.png'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets'),
           to: path.resolve(__dirname, 'dist'),
         },
       ],

@@ -1,100 +1,87 @@
-import data from './data'
 import './index.scss'
 
-// const root = document.querySelector('#app')
-
-// function renderItem(item, index) {
-//   const li = document.createElement('li')
-//   li.textContent = item.title
-//   if (index % 2 === 0) {
-//     li.style.background = 'lightgray'
-//     li.style.color = 'red'
-//   } else {
-//     li.style.background = 'lightblue'
-//   }
-//   root.append(li)
-// }
-
-// data.forEach(renderItem)
-
-// const root2 = document.querySelector('#div')
-
-// const button = document.createElement('button')
-// button.textContent = '77'
-// root2.append(button)
-
-// const root = document.querySelector('#app')
-
-// получаем элементы из HTML
 const volumeSlider = document.getElementById('volume')
-const forestButton = document.getElementById('forest-button')
+
+const sunButton = document.getElementById('sun-button')
 const rainButton = document.getElementById('rain-button')
-const oceanButton = document.getElementById('ocean-button')
+const snowButton = document.getElementById('snow-button')
+
+const sunIcon = document.getElementById('sun')
+const rainIcon = document.getElementById('rain')
+const snowIcon = document.getElementById('snow')
+
+const urlSunIcon = "url('./assets/icons/sun.svg')"
+const urlRainIcon = "url('./assets/icons/cloud-rain.svg')"
+const urlSnowIcon = "url('./assets/icons/cloud-snow.svg')"
+const urlPauseIcon = "url('./assets/icons/pause.svg')"
+
 const body = document.body
 
-// создаем объекты аудио
-const forestAudio = new Audio('./assets/sounds/summer.mp3')
-const rainAudio = new Audio('./assets/sounds/rain.mp3')
-const oceanAudio = new Audio('./assets/sounds/winter.mp3')
-
-// создаем массив из всех аудио
-const allAudio = [rainAudio, oceanAudio, forestAudio]
-
-// создаем функцию для остановки всех аудио
-const stopAllAudio = () => {
-  allAudio.forEach((audio) => {
-    audio.pause()
-  })
-}
-
-// создаем функцию для установки громкости всех аудио
-const setVolumeAllAudio = (value) => {
-  allAudio.forEach((audio) => {
-    audio.volume = value
-  })
-}
-
-// создаем функцию для воспроизведения или приостановки аудио
-const playOrPauseAudio = (audio, button) => {
-  if (audio.paused) {
-    stopAllAudio()
-    audio.play()
-    button.classList.add('active')
-  } else {
-    audio.pause()
-    button.classList.remove('active')
-  }
-}
-
-// создаем функцию для смены фоновой картинки
-const changeBackgroundImage = (button, image) => {
-  // Снимаем класс active со всех кнопок
-  forestButton.classList.remove('active')
+const changeBackground = (button, image) => {
+  sunButton.classList.remove('active')
   rainButton.classList.remove('active')
-  oceanButton.classList.remove('active')
-  // Добавляем класс active на выбранную кнопку
+  snowButton.classList.remove('active')
   button.classList.add('active')
-  // Устанавливаем картинку фона для body
   body.style.backgroundImage = `url(${image})`
 }
 
-// добавляем обработчики событий для регулятора громкости
-volumeSlider.addEventListener('input', () => {
-  setVolumeAllAudio(volumeSlider.value)
-})
+let index = 0
 
-// добавляем обработчики событий для кнопок аудио
-forestButton.addEventListener('click', () => {
-  // playOrPauseAudio(forestAudio, forestButton)
-  changeBackgroundImage(forestButton, './assets/summer-bg.jpg')
+const toggleCurrentIconOrPauseIcon = (el, arrTwoImages) => {
+  index = (index + 1) % arrTwoImages.length
+  el.style.backgroundImage = arrTwoImages[index]
+}
+
+sunButton.addEventListener('click', () => {
+  rainIcon.style.backgroundImage = urlRainIcon
+  snowIcon.style.backgroundImage = urlSnowIcon
+
+  toggleCurrentIconOrPauseIcon(sunIcon, [urlPauseIcon, urlSunIcon])
+
+  changeBackground(sunButton, './assets/summer-bg.jpg')
+  playOrPauseAudio(sunAudio)
 })
 
 rainButton.addEventListener('click', () => {
-  // playOrPauseAudio(rainAudio, rainButton)
-  changeBackgroundImage(rainButton, './assets/rainy-bg.jpg')
+  sunIcon.style.backgroundImage = urlSunIcon
+  snowIcon.style.backgroundImage = urlSnowIcon
+
+  toggleCurrentIconOrPauseIcon(rainIcon, [urlPauseIcon, urlRainIcon])
+
+  changeBackground(rainButton, './assets/rainy-bg.jpg')
+  playOrPauseAudio(rainAudio)
 })
 
-oceanButton.addEventListener('click', () => {
-  // playOrPauseAudio(oceanAudio, oceanButton)
-  changeBackgroundImage(oceanButton, './assets/winter-bg.jpg')
+snowButton.addEventListener('click', () => {
+  sunIcon.style.backgroundImage = urlSunIcon
+  rainIcon.style.backgroundImage = urlRainIcon
+
+  toggleCurrentIconOrPauseIcon(snowIcon, [urlPauseIcon, urlSnowIcon])
+
+  changeBackground(snowButton, './assets/winter-bg.jpg')
+  playOrPauseAudio(snowAudio)
 })
+
+const sunAudio = new Audio('./assets/sounds/summer.mp3')
+const rainAudio = new Audio('./assets/sounds/rain.mp3')
+const snowAudio = new Audio('./assets/sounds/winter.mp3')
+
+const allAudio = [sunAudio, rainAudio, snowAudio]
+
+const stopAllAudio = () => allAudio.forEach((audio) => audio.pause())
+
+const setVolumeAllAudio = (value) =>
+  allAudio.forEach((audio) => (audio.volume = value))
+
+const playOrPauseAudio = (audio) => {
+  if (audio.paused) {
+    stopAllAudio()
+    audio.play()
+  } else {
+    audio.pause()
+  }
+}
+
+volumeSlider.addEventListener('input', () =>
+  setVolumeAllAudio(volumeSlider.value)
+)

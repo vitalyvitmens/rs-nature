@@ -2,7 +2,6 @@
 <html>
   <head>
     <style>
-      /* Стили для кнопок */
       @font-face {
         font-family: 'Roboto';
         src: url('./fonts/Roboto-Regular.ttf') format('truetype');
@@ -23,31 +22,10 @@
         background-attachment: fixed;
       }
 
-      #app {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
       h1 {
         text-align: center;
         color: rgb(230, 107, 25);
         font-size: 3rem;
-      }
-
-      /* ul {
-        list-style: none;
-
-        li {
-          padding: 1rem 2rem;
-          border: 1px solid #ccc;
-          border-radius: 10px;
-          margin-bottom: 1rem;
-        }
-      } */
-
-      h3 {
-        text-align: center;
       }
 
       .buttons {
@@ -77,150 +55,163 @@
         color: green;
       }
 
-      #forest-button {
-        background-color: url(assets/summer-bg.jpg);
+      #sun-button {
+        background: url(../src/assets/summer-bg.jpg);
         background-size: cover;
       }
 
       #rain-button {
-        background: url(assets/rainy-bg.jpg);
+        background: url(../src/assets/rainy-bg.jpg);
         background-size: cover;
       }
 
-      #ocean-button {
-        background: url(assets/winter-bg.jpg);
+      #snow-button {
+        background: url(../src/assets/winter-bg.jpg);
         background-size: cover;
       }
 
       button.active {
         border: 2px solid red;
       }
+
       .slider {
         display: flex;
         flex-direction: column;
         margin: auto;
         width: 140px;
       }
+
+      #sun {
+        margin: auto;
+        width: 50px;
+        height: 50px;
+        background: url(../src/assets/icons/sun.svg);
+        background-size: cover;
+      }
+
+      #rain {
+        margin: auto;
+        width: 50px;
+        height: 50px;
+        background: url(../src/assets/icons/cloud-rain.svg);
+        background-size: cover;
+      }
+
+      #snow {
+        margin: auto;
+        width: 50px;
+        height: 50px;
+        background: url(../src/assets/icons/cloud-snow.svg);
+        background-size: cover;
+      }
     </style>
   </head>
   <body>
     <h1>Weather sounds</h1>
 
-    <!-- Кнопки для выбора фона -->
     <div class="buttons">
-      <button id="forest-button"><div id="sun"></div></button>
+      <button id="sun-button"><div id="sun"></div></button>
       <button id="rain-button"><div id="rain"></div></button>
-      <button id="ocean-button"><div id="snow"></div></button>
+      <button id="snow-button"><div id="snow"></div></button>
     </div>
 
     <div class="slider">
-      <input type="range" id="volume" name="volume" min="0" max="10" />
-      <div id="pause"></div>
+      <input
+        type="range"
+        id="volume"
+        name="volume"
+        min="0"
+        max="1"
+        step="0.05"
+      />
     </div>
 
-    <!-- Скрипт для обработки кликов по кнопкам -->
     <script>
-      // Получаем элементы кнопок и body
-      const forestButton = document.getElementById('forest-button')
-      forestButton.style.backgroundImage = "url('../src/assets/summer-bg.jpg')"
-      const sun = document.getElementById('sun')
-      sun.style.backgroundImage = "url('../src/assets/icons/sun.svg')"
-      sun.style.width = '60px'
-      sun.style.height = '60px'
-      sun.style.backgroundSize = '60px'
-      sun.style.margin = 'auto'
+      const volumeSlider = document.getElementById('volume')
 
+      const sunButton = document.getElementById('sun-button')
       const rainButton = document.getElementById('rain-button')
-      rainButton.style.backgroundImage = "url('../src/assets/rainy-bg.jpg')"
-      const rain = document.getElementById('rain')
-      rain.style.backgroundImage = "url('../src/assets/icons/cloud-rain.svg')"
-      rain.style.width = '60px'
-      rain.style.height = '60px'
-      rain.style.backgroundSize = '60px'
-      rain.style.margin = 'auto'
+      const snowButton = document.getElementById('snow-button')
 
-      const oceanButton = document.getElementById('ocean-button')
-      oceanButton.style.backgroundImage = "url('../src/assets/winter-bg.jpg')"
-      const snow = document.getElementById('snow')
-      snow.style.backgroundImage = "url('../src/assets/icons/cloud-snow.svg')"
-      snow.style.width = '60px'
-      snow.style.height = '60px'
-      snow.style.backgroundSize = '60px'
-      snow.style.margin = 'auto'
+      const sunIcon = document.getElementById('sun')
+      const rainIcon = document.getElementById('rain')
+      const snowIcon = document.getElementById('snow')
+
+      const urlSunIcon = "url('../src/assets/icons/sun.svg')"
+      const urlRainIcon = "url('../src/assets/icons/cloud-rain.svg')"
+      const urlSnowIcon = "url('../src/assets/icons/cloud-snow.svg')"
+      const urlPauseIcon = "url('../src/assets/icons/pause.svg')"
 
       const body = document.body
 
-      // Создаем функцию для смены фона и активной кнопки
       const changeBackground = (button, image) => {
-        // Снимаем класс active со всех кнопок
-        forestButton.classList.remove('active')
+        sunButton.classList.remove('active')
         rainButton.classList.remove('active')
-        oceanButton.classList.remove('active')
-        // Добавляем класс active на выбранную кнопку
+        snowButton.classList.remove('active')
         button.classList.add('active')
-        // Устанавливаем картинку фона для body
         body.style.backgroundImage = `url(${image})`
       }
 
-      // Добавляем обработчики событий для каждой кнопки
-      forestButton.addEventListener('click', () => {
-        changeBackground(forestButton, '../src/assets/summer-bg.jpg')
-        // body.style.filter = 'blur(10px)'
-        playOrPauseAudio(forestAudio, forestButton)
+      let index = 0
+
+      const toggleCurrentIconOrPauseIcon = (el, arrTwoImages) => {
+        index = (index + 1) % arrTwoImages.length
+        el.style.backgroundImage = arrTwoImages[index]
+      }
+
+      sunButton.addEventListener('click', () => {
+        rainIcon.style.backgroundImage = urlRainIcon
+        snowIcon.style.backgroundImage = urlSnowIcon
+
+        toggleCurrentIconOrPauseIcon(sunIcon, [urlPauseIcon, urlSunIcon])
+
+        changeBackground(sunButton, '../src/assets/summer-bg.jpg')
+        playOrPauseAudio(sunAudio)
       })
 
       rainButton.addEventListener('click', () => {
+        sunIcon.style.backgroundImage = urlSunIcon
+        snowIcon.style.backgroundImage = urlSnowIcon
+
+        toggleCurrentIconOrPauseIcon(rainIcon, [urlPauseIcon, urlRainIcon])
+
         changeBackground(rainButton, '../src/assets/rainy-bg.jpg')
-        playOrPauseAudio(rainAudio, forestButton)
+        playOrPauseAudio(rainAudio)
       })
 
-      oceanButton.addEventListener('click', () => {
-        changeBackground(oceanButton, '../src/assets/winter-bg.jpg')
-        playOrPauseAudio(oceanAudio, forestButton)
+      snowButton.addEventListener('click', () => {
+        sunIcon.style.backgroundImage = urlSunIcon
+        rainIcon.style.backgroundImage = urlRainIcon
+
+        toggleCurrentIconOrPauseIcon(snowIcon, [urlPauseIcon, urlSnowIcon])
+
+        changeBackground(snowButton, '../src/assets/winter-bg.jpg')
+        playOrPauseAudio(snowAudio)
       })
 
-      // создаем объекты аудио
-      const forestAudio = new Audio('../src/assets/sounds/summer.mp3')
+      const sunAudio = new Audio('../src/assets/sounds/summer.mp3')
       const rainAudio = new Audio('../src/assets/sounds/rain.mp3')
-      const oceanAudio = new Audio('../src/assets/sounds/winter.mp3')
-      // создаем массив из всех аудио
-      const allAudio = [rainAudio, oceanAudio, forestAudio]
+      const snowAudio = new Audio('../src/assets/sounds/winter.mp3')
 
-      // создаем функцию для остановки всех аудио
-      const stopAllAudio = () => {
-        allAudio.forEach((audio) => {
-          audio.pause()
-        })
-      }
+      const allAudio = [sunAudio, rainAudio, snowAudio]
 
-      // создаем функцию для установки громкости всех аудио
-      const setVolumeAllAudio = (value) => {
-        allAudio.forEach((audio) => {
-          audio.volume = value
-        })
-      }
+      const stopAllAudio = () => allAudio.forEach((audio) => audio.pause())
 
-      // создаем функцию для воспроизведения или приостановки аудио
-      const playOrPauseAudio = (audio, button) => {
-        const pause = document.getElementById('pause')
-        pause.style.backgroundImage = "url('../src/assets/icons/pause.svg')"
+      const setVolumeAllAudio = (value) =>
+        allAudio.forEach((audio) => (audio.volume = value))
+
+      const playOrPauseAudio = (audio) => {
         if (audio.paused) {
           stopAllAudio()
           audio.play()
-          // button.classList.add('active')
-          pause.style.width = null
-          pause.style.height = null
-          pause.style.backgroundSize = null
-          pause.style.margin = null
         } else {
           audio.pause()
-          // button.classList.remove('active')
-          pause.style.width = '60px'
-          pause.style.height = '60px'
-          pause.style.backgroundSize = '60px'
-          pause.style.margin = 'auto'
         }
       }
+
+      volumeSlider.addEventListener('input', () =>
+        setVolumeAllAudio(volumeSlider.value)
+      )
     </script>
   </body>
 </html>
