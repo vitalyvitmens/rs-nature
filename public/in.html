@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Стили для кнопок */
+      @font-face {
+        font-family: 'Roboto';
+        src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+      }
+
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        max-width: 960px;
+        margin: 1rem auto;
+      }
+
+      #app {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h1 {
+        text-align: center;
+        color: rgb(230, 107, 25);
+        font-size: 3rem;
+      }
+
+      ul {
+        list-style: none;
+
+        li {
+          padding: 1rem 2rem;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          margin-bottom: 1rem;
+        }
+      }
+
+      h3 {
+        text-align: center;
+      }
+
+      .buttons {
+        display: flex;
+        width: 70%;
+        margin: 1rem auto;
+      }
+
+      button {
+        width: 200px;
+        height: 200px;
+        margin: 0.5rem auto;
+        padding: 0.5rem;
+        border: 2px solid rgb(207, 190, 190);
+        border-radius: 20px;
+      }
+
+      button:hover {
+        opacity: 0.75;
+        cursor: pointer;
+        transform: translateY(-2px);
+      }
+
+      button:active {
+        opacity: 0.5;
+        border: 2px solid green;
+        color: green;
+      }
+
+      #forest-button {
+        background-color: url(assets/summer-bg.jpg);
+        background-size: cover;
+      }
+
+      #rain-button {
+        background: url(assets/rainy-bg.jpg);
+        background-size: cover;
+      }
+
+      #ocean-button {
+        background: url(assets/winter-bg.jpg);
+        background-size: cover;
+      }
+
+      button.active {
+        border: 2px solid red;
+      }
+      .slider {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        width: 140px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Weather sounds</h1>
+
+    <!-- Кнопки для выбора фона -->
+    <div class="buttons">
+      <button id="forest-button"><div id="sun"></div></button>
+      <button id="rain-button"><div id="rain"></div></button>
+      <button id="ocean-button"><div id="snow"></div></button>
+    </div>
+
+    <div class="slider">
+      <input type="range" id="volume" name="volume" min="0" max="10" />
+      <div id="pause"></div>
+    </div>
+
+    <!-- Скрипт для обработки кликов по кнопкам -->
+    <script>
+      // Получаем элементы кнопок и body
+      const forestButton = document.getElementById('forest-button')
+      forestButton.style.backgroundImage = "url('../src/assets/summer-bg.jpg')"
+      const sun = document.getElementById('sun')
+      sun.style.backgroundImage = "url('../src/assets/icons/sun.svg')"
+      sun.style.width = '60px'
+      sun.style.height = '60px'
+      sun.style.backgroundSize = '60px'
+      sun.style.margin = 'auto'
+
+      const rainButton = document.getElementById('rain-button')
+      rainButton.style.backgroundImage = "url('../src/assets/rainy-bg.jpg')"
+      const rain = document.getElementById('rain')
+      rain.style.backgroundImage = "url('../src/assets/icons/cloud-rain.svg')"
+      rain.style.width = '60px'
+      rain.style.height = '60px'
+      rain.style.backgroundSize = '60px'
+      rain.style.margin = 'auto'
+
+      const oceanButton = document.getElementById('ocean-button')
+      oceanButton.style.backgroundImage = "url('../src/assets/winter-bg.jpg')"
+      const snow = document.getElementById('snow')
+      snow.style.backgroundImage = "url('../src/assets/icons/cloud-snow.svg')"
+      snow.style.width = '60px'
+      snow.style.height = '60px'
+      snow.style.backgroundSize = '60px'
+      snow.style.margin = 'auto'
+
+      const body = document.body
+
+      // Создаем функцию для смены фона и активной кнопки
+      const changeBackground = (button, image) => {
+        // Снимаем класс active со всех кнопок
+        forestButton.classList.remove('active')
+        rainButton.classList.remove('active')
+        oceanButton.classList.remove('active')
+        // Добавляем класс active на выбранную кнопку
+        button.classList.add('active')
+        // Устанавливаем картинку фона для body
+        body.style.backgroundImage = `url(${image})`
+      }
+
+      // Добавляем обработчики событий для каждой кнопки
+      forestButton.addEventListener('click', () => {
+        changeBackground(forestButton, '../src/assets/summer-bg.jpg')
+        // body.style.filter = 'blur(10px)'
+        playOrPauseAudio(forestAudio, forestButton)
+      })
+
+      rainButton.addEventListener('click', () => {
+        changeBackground(rainButton, '../src/assets/rainy-bg.jpg')
+        playOrPauseAudio(rainAudio, forestButton)
+      })
+
+      oceanButton.addEventListener('click', () => {
+        changeBackground(oceanButton, '../src/assets/winter-bg.jpg')
+        playOrPauseAudio(oceanAudio, forestButton)
+      })
+
+      // создаем объекты аудио
+      const forestAudio = new Audio('../src/assets/sounds/summer.mp3')
+      const rainAudio = new Audio('../src/assets/sounds/rain.mp3')
+      const oceanAudio = new Audio('../src/assets/sounds/winter.mp3')
+      // создаем массив из всех аудио
+      const allAudio = [rainAudio, oceanAudio, forestAudio]
+
+      // создаем функцию для остановки всех аудио
+      const stopAllAudio = () => {
+        allAudio.forEach((audio) => {
+          audio.pause()
+        })
+      }
+
+      // создаем функцию для установки громкости всех аудио
+      const setVolumeAllAudio = (value) => {
+        allAudio.forEach((audio) => {
+          audio.volume = value
+        })
+      }
+
+      // создаем функцию для воспроизведения или приостановки аудио
+      const playOrPauseAudio = (audio, button) => {
+        const pause = document.getElementById('pause')
+        pause.style.backgroundImage = "url('../src/assets/icons/pause.svg')"
+        if (audio.paused) {
+          stopAllAudio()
+          audio.play()
+          // button.classList.add('active')
+          pause.style.width = null
+          pause.style.height = null
+          pause.style.backgroundSize = null
+          pause.style.margin = null
+        } else {
+          audio.pause()
+          // button.classList.remove('active')
+          pause.style.width = '60px'
+          pause.style.height = '60px'
+          pause.style.backgroundSize = '60px'
+          pause.style.margin = 'auto'
+        }
+      }
+    </script>
+  </body>
+</html>

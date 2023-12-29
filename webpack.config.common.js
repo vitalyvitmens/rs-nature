@@ -9,6 +9,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'assets/[hash][ext][query]',
     clean: true,
   },
   plugins: [
@@ -19,46 +20,6 @@ module.exports = {
       patterns: [
         {
           from: path.resolve(__dirname, 'public/favicon.png'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/icons/cloud-rain.svg'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/icons/cloud-snow.svg'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/icons/pause.svg'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/icons/sun.svg'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/rainy-bg.jpg'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/summer-bg.jpg'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/winter-bg.jpg'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/sounds/rain.mp3'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/sounds/summer.mp3'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'src/assets/sounds/winter.mp3'),
           to: path.resolve(__dirname, 'dist'),
         },
       ],
@@ -88,11 +49,9 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpe?g|gif|svg|woff|woff2|eot|ttf|otf|ico|mp3|wav)$/i,
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|eot|ttf|otf|ico|mp3|wav)$/i,
         type: 'asset/resource',
-        generator: {
-          filename: 'assets/[name].[hash][ext]',
-        },
+        // use: 'file-loader',
       },
     ],
   },

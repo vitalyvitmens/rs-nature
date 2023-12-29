@@ -1,33 +1,41 @@
 import data from './data'
 import './index.scss'
 
-const root = document.querySelector('#app')
+// const root = document.querySelector('#app')
 
-function renderItem(item, index) {
-  const li = document.createElement('li')
-  li.textContent = item.title
-  if (index % 2 === 0) {
-    li.style.background = 'lightgray'
-    li.style.color = 'red'
-  } else {
-    li.style.background = 'lightblue'
-  }
-  root.append(li)
-}
+// function renderItem(item, index) {
+//   const li = document.createElement('li')
+//   li.textContent = item.title
+//   if (index % 2 === 0) {
+//     li.style.background = 'lightgray'
+//     li.style.color = 'red'
+//   } else {
+//     li.style.background = 'lightblue'
+//   }
+//   root.append(li)
+// }
 
-data.forEach(renderItem)
+// data.forEach(renderItem)
+
+// const root2 = document.querySelector('#div')
+
+// const button = document.createElement('button')
+// button.textContent = '77'
+// root2.append(button)
+
+// const root = document.querySelector('#app')
 
 // получаем элементы из HTML
-const volumeSlider = document.getElementById('volume-slider')
+const volumeSlider = document.getElementById('volume')
+const forestButton = document.getElementById('forest-button')
 const rainButton = document.getElementById('rain-button')
 const oceanButton = document.getElementById('ocean-button')
-const forestButton = document.getElementById('forest-button')
-const body = document.querySelector('body')
+const body = document.body
 
 // создаем объекты аудио
+const forestAudio = new Audio('./assets/sounds/summer.mp3')
 const rainAudio = new Audio('./assets/sounds/rain.mp3')
 const oceanAudio = new Audio('./assets/sounds/winter.mp3')
-const forestAudio = new Audio('./assets/sounds/summer.mp3')
 
 // создаем массив из всех аудио
 const allAudio = [rainAudio, oceanAudio, forestAudio]
@@ -59,8 +67,15 @@ const playOrPauseAudio = (audio, button) => {
 }
 
 // создаем функцию для смены фоновой картинки
-const changeBackgroundImage = (image) => {
-  body.style.backgroundImage = `url(./assets/${image})`
+const changeBackgroundImage = (button, image) => {
+  // Снимаем класс active со всех кнопок
+  forestButton.classList.remove('active')
+  rainButton.classList.remove('active')
+  oceanButton.classList.remove('active')
+  // Добавляем класс active на выбранную кнопку
+  button.classList.add('active')
+  // Устанавливаем картинку фона для body
+  body.style.backgroundImage = `url(${image})`
 }
 
 // добавляем обработчики событий для регулятора громкости
@@ -69,17 +84,17 @@ volumeSlider.addEventListener('input', () => {
 })
 
 // добавляем обработчики событий для кнопок аудио
+forestButton.addEventListener('click', () => {
+  // playOrPauseAudio(forestAudio, forestButton)
+  changeBackgroundImage(forestButton, './assets/summer-bg.jpg')
+})
+
 rainButton.addEventListener('click', () => {
-  playOrPauseAudio(rainAudio, rainButton)
-  changeBackgroundImage('rainy-bg.jpg')
+  // playOrPauseAudio(rainAudio, rainButton)
+  changeBackgroundImage(rainButton, './assets/rainy-bg.jpg')
 })
 
 oceanButton.addEventListener('click', () => {
-  playOrPauseAudio(oceanAudio, oceanButton)
-  changeBackgroundImage('winter-bg.jpg')
-})
-
-forestButton.addEventListener('click', () => {
-  playOrPauseAudio(forestAudio, forestButton)
-  changeBackgroundImage('summer-bg.jpg')
+  // playOrPauseAudio(oceanAudio, oceanButton)
+  changeBackgroundImage(oceanButton, './assets/winter-bg.jpg')
 })
