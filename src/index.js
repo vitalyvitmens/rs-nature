@@ -35,7 +35,6 @@ const sunIcon = document.getElementById('sun')
 const rainIcon = document.getElementById('rain')
 // rainIcon.append(img)
 const snowIcon = document.getElementById('snow')
-snowIcon.append(img)
 
 const body = document.body
 
@@ -55,30 +54,39 @@ const toggleCurrentIconOrPauseIcon = (el, arrTwoImages) => {
 }
 
 sunButton.addEventListener('click', () => {
-  rainIcon.style.backgroundImage = urlRainIcon
-  snowIcon.style.backgroundImage = urlSnowIcon
+  rainIcon.style.backgroundImage = `url(${urlRainIcon})`
+  snowIcon.style.backgroundImage = `url(${urlSnowIcon})`
 
-  toggleCurrentIconOrPauseIcon(sunIcon, [urlPauseIcon, urlSunIcon])
+  toggleCurrentIconOrPauseIcon(sunIcon, [
+    `url(${urlPauseIcon})`,
+    `url(${urlSunIcon})`,
+  ])
 
   changeBackground(sunButton, summerBg)
   playOrPauseAudio(sunAudio)
 })
 
 rainButton.addEventListener('click', () => {
-  sunIcon.style.backgroundImage = urlSunIcon
-  snowIcon.style.backgroundImage = urlSnowIcon
+  sunIcon.style.backgroundImage = `url(${urlSunIcon})`
+  snowIcon.style.backgroundImage = `url(${urlSnowIcon})`
 
-  toggleCurrentIconOrPauseIcon(rainIcon, [urlPauseIcon, urlRainIcon])
+  toggleCurrentIconOrPauseIcon(rainIcon, [
+    `url(${urlPauseIcon})`,
+    `url(${urlRainIcon})`,
+  ])
 
   changeBackground(rainButton, rainyBg)
   playOrPauseAudio(rainAudio)
 })
 
 snowButton.addEventListener('click', () => {
-  sunIcon.style.backgroundImage = urlSunIcon
-  rainIcon.style.backgroundImage = urlRainIcon
+  sunIcon.style.backgroundImage = `url(${urlSunIcon})`
+  rainIcon.style.backgroundImage = `url(${urlRainIcon})`
 
-  toggleCurrentIconOrPauseIcon(snowIcon, [urlPauseIcon, urlSnowIcon])
+  toggleCurrentIconOrPauseIcon(snowIcon, [
+    `url(${urlPauseIcon})`,
+    `url(${urlSnowIcon})`,
+  ])
 
   changeBackground(snowButton, winterBg)
   playOrPauseAudio(snowAudio)
