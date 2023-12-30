@@ -10,4 +10,9 @@ module.exports = merge(commonConfig, {
     minimize: true,
     minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
   },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
 })
