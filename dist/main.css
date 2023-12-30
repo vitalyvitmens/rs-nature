@@ -15,7 +15,7 @@ body {
   font-family: "Roboto", sans-serif;
   max-width: 960px;
   margin: 1rem auto;
-  background: url(assets/a318dfda9223c9b6bcc1.jpg);
+  background: url(assets/2230c1de657eb63bd969.jpg);
   background-size: cover;
   background-attachment: fixed;
 }
@@ -54,17 +54,17 @@ button:active {
 }
 
 #sun-button {
-  background: url(assets/a318dfda9223c9b6bcc1.jpg);
+  background: url(assets/2230c1de657eb63bd969.jpg);
   background-size: cover;
 }
 
 #rain-button {
-  background: url(assets/5df8a5c7dcda04cc3f1e.jpg);
+  background: url(assets/1672d521b7666cc32eb6.jpg);
   background-size: cover;
 }
 
 #snow-button {
-  background: url(assets/032cb68ed96890ac0c3b.jpg);
+  background: url(assets/d4a503e0077fa690f494.jpg);
   background-size: cover;
 }
 
@@ -83,7 +83,7 @@ button.active {
   margin: auto;
   width: 50px;
   height: 50px;
-  background: url(assets/a59f0405b34e25bfdd3c.svg);
+  background: url(assets/ed5b7b0f0e5100107cd9.svg);
   background-size: cover;
 }
 
@@ -91,7 +91,7 @@ button.active {
   margin: auto;
   width: 50px;
   height: 50px;
-  background: url(assets/50816e42231842d4567c.svg);
+  background: url(assets/af179e4434960a44c19b.svg);
   background-size: cover;
 }
 
@@ -99,7 +99,7 @@ button.active {
   margin: auto;
   width: 50px;
   height: 50px;
-  background: url(assets/7cd24bfa252235321377.svg);
+  background: url(assets/04d1a3c9be7dee21bc55.svg);
   background-size: cover;
 }
 

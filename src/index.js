@@ -6,9 +6,9 @@ import urlSunIcon from './assets/icons/sun.svg'
 import urlRainIcon from './assets/icons/cloud-rain.svg'
 import urlSnowIcon from './assets/icons/cloud-snow.svg'
 import urlPauseIcon from './assets/icons/pause.svg'
-import sunAudio from './assets/sounds/summer.mp3'
-import rainAudio from './assets/sounds/rain.mp3'
-import snowAudio from './assets/sounds/winter.mp3'
+import urlSunAudio from './assets/sounds/summer.mp3'
+import urlRainAudio from './assets/sounds/rain.mp3'
+import urlSnowAudio from './assets/sounds/winter.mp3'
 
 const img = new Image()
 img.src = summerBg
@@ -19,10 +19,9 @@ img.src = urlRainIcon
 img.src = urlSnowIcon
 img.src = urlPauseIcon
 
-const audio = new Audio()
-audio.src = sunAudio
-audio.src = rainAudio
-audio.src = snowAudio
+const sunAudio = new Audio(urlSunAudio)
+const rainAudio = new Audio(urlRainAudio)
+const snowAudio = new Audio(urlSnowAudio)
 
 const volumeSlider = document.getElementById('volume')
 
@@ -31,9 +30,7 @@ const rainButton = document.getElementById('rain-button')
 const snowButton = document.getElementById('snow-button')
 
 const sunIcon = document.getElementById('sun')
-// sunIcon.append(img)
 const rainIcon = document.getElementById('rain')
-// rainIcon.append(img)
 const snowIcon = document.getElementById('snow')
 
 const body = document.body
@@ -104,7 +101,7 @@ const playOrPauseAudio = (audio) => {
     stopAllAudio()
     audio.play()
   } else {
-    audio.pause
+    audio.pause()
   }
 }
 
