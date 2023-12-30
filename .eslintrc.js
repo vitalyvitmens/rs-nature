@@ -13,7 +13,7 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: 'module',
   },
-  plugins: [],
+  plugins: ['prettier'],
   rules: {
     'linebreak-style': ['error', 'windows'],
     'object-curly-newline': 'off',

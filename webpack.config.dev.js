@@ -10,5 +10,12 @@ module.exports = merge(commonConfig, {
     hot: true,
     open: true,
   },
-  plugins: [new ESLintPlugin()],
+  plugins: [
+    new ESLintPlugin({
+      files: 'src/**/*.js',
+    }),
+  ],
+  resolve: {
+    extensions: ['.jsx', '.js'],
+  },
 })
