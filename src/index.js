@@ -91,10 +91,17 @@ snowButton.addEventListener('click', () => {
 
 const allAudio = [sunAudio, rainAudio, snowAudio]
 
-const stopAllAudio = () => allAudio.forEach((audio) => audio.pause())
+const stopAllAudio = () => {
+  allAudio.forEach((audio) => {
+    audio.pause()
+  })
+}
 
-const setVolumeAllAudio = (value) =>
-  allAudio.forEach((audio) => (audio.volume = value))
+const setVolumeAllAudio = (value) => {
+  allAudio.forEach((audio) => {
+    audio.volume = value
+  })
+}
 
 const playOrPauseAudio = (audio) => {
   if (audio.paused) {
@@ -105,6 +112,6 @@ const playOrPauseAudio = (audio) => {
   }
 }
 
-volumeSlider.addEventListener('input', () =>
+volumeSlider.addEventListener('input', () => {
   setVolumeAllAudio(volumeSlider.value)
-)
+})

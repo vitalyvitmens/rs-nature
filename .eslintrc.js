@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: [],
   rules: {
+    'linebreak-style': ['error', 'windows'],
     'object-curly-newline': 'off',
     semi: 'off',
     'func-names': 'off',
@@ -23,7 +24,7 @@ module.exports = {
     'consistent-return': 'off',
     'no-use-before-define': 'off',
     radix: 'error',
-    indent: ['error', 4],
+    indent: ['error', 2],
     'padded-blocks': [
       'warn',
       { blocks: 'never', classes: 'always', switches: 'never' },
